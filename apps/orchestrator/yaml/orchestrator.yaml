@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: demo
+  name: orchestrator
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: orchestrator
+  replicas: 1
+  template:
+     metadata:
+       labels:
+         app.kubernetes.io/name: orchestrator
+     spec:
+      serviceAccountName: demo
+      containers:
+        - name: orchestrator
+          image: 902812008909.dkr.ecr.ap-south-1.amazonaws.com/orchestrator:main
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: orchestrator
+                  #      resources:
+                  # limits:
+                  # memory: "128Mi"
+                  # cpu: "64"
+                
